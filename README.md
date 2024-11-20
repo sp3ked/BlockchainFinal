@@ -1,8 +1,6 @@
-# Sample Hardhat Project
+# DECENTRALIZED Blackjack
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
-
-Try running some of the following tasks:
+This project is a decentralized blackjack game that is built on the Ethereum blockchain. The game is built using Solidity, Hardhat, and React. The game is deployed on the Scroll Sepolia testnet.
 
 ```shell
 npx hardhat help
@@ -11,3 +9,4 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.js
 ```
+
