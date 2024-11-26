@@ -1,4 +1,4 @@
-# DECENTRALIZED Blackjack
+# MemeCoin Battles
 
 This project is a decentralized blackjack game that is built on the Ethereum blockchain. The game is built using Solidity, Hardhat, and React. The game is deployed on the Scroll Sepolia testnet.
 
