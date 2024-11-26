@@ -13,7 +13,7 @@
     "autoprefixer": "^10.4.20",
     "chai": "^4.2.0",
     "dotenv": "^16.0.0",
-    "ethers": "^6.9.0",
+    "ethers": "^6.13.4",
     "hardhat": "^2.19.0",
     "hardhat-gas-reporter": "^1.0.8",
     "postcss": "^8.4.49",
@@ -22,5 +22,12 @@
     "ts-node": "^10.9.1",
     "typechain": "^8.3.0",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "lightweight-charts": "^4.2.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-hot-toast": "^2.4.1",
+    "recharts": "^2.13.3"
   }
 }
