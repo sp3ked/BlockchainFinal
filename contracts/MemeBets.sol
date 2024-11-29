@@ -3,6 +3,9 @@ pragma solidity ^0.8.19;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
+
+
+
 contract MemeBets {
     struct Bet {
         address bettor;
@@ -13,6 +16,7 @@ contract MemeBets {
         uint256 startShibPrice;
         bool isSettled;
     }
+
 
     AggregatorV3Interface private dogePriceFeed;
     AggregatorV3Interface private shibPriceFeed;
