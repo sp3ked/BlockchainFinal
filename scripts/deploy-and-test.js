@@ -4,83 +4,93 @@ async function main() {
     try {
         console.log("Starting deployment and test...");
 
+        // Deploy BettingToken
+        console.log("Deploying BettingToken...");
+        const BettingToken = await ethers.getContractFactory("BettingToken");
+        const bettingToken = await BettingToken.deploy();
+        await bettingToken.waitForDeployment();
+        console.log("BettingToken deployed to:", await bettingToken.getAddress());
+
         // Deploy mock price feeds
-        const MockV3Aggregator = await ethers.getContractFactory("MockV3Aggregator");
         console.log("Deploying Mock Price Feeds...");
-
-        const mockDogeFeed = await MockV3Aggregator.deploy(8, 100000000); // DOGE initial price ($1.00)
-        const mockShibFeed = await MockV3Aggregator.deploy(8, 1000000);   // SHIB initial price ($0.01)
-
+        const MockV3Aggregator = await ethers.getContractFactory("MockV3Aggregator");
+        const mockDogeFeed = await MockV3Aggregator.deploy(8, 100000000);
+        const mockShibFeed = await MockV3Aggregator.deploy(8, 1000000);
         await mockDogeFeed.waitForDeployment();
         await mockShibFeed.waitForDeployment();
-
         console.log("Mock DOGE Feed deployed to:", await mockDogeFeed.getAddress());
         console.log("Mock SHIB Feed deployed to:", await mockShibFeed.getAddress());
 
-        // Deploy the main MemeBets contract
+        // Deploy MemeBets
+        console.log("Deploying MemeBets...");
         const MemeBets = await ethers.getContractFactory("MemeBets");
         const memeBets = await MemeBets.deploy(
             await mockDogeFeed.getAddress(),
-            await mockShibFeed.getAddress()
+            await mockShibFeed.getAddress(),
+            await bettingToken.getAddress()
         );
         await memeBets.waitForDeployment();
-
         console.log("MemeBets deployed to:", await memeBets.getAddress());
 
         // Get signers
         const [owner] = await ethers.getSigners();
-        const user1 = owner; // Use the same account for simplicity
+        const user1 = owner;
         console.log("Using owner address:", owner.address);
         console.log("Using user1 address:", user1.address);
+        
+        // Approve tokens for withdrawal
+        console.log("\nApproving tokens for withdrawal...");
+        await bettingToken.approve(await memeBets.getAddress(), ethers.parseEther("1000"));
 
-        // Interact with the contract using the signer
         const contractWithSigner = memeBets.connect(user1);
 
-        // Deposit funds
+        //depo
         console.log("\nTesting deposit...");
-        const depositAmount = ethers.parseEther("0.05"); // Reduced to 0.05 ETH
+        const depositAmount = ethers.parseEther("15");
         const depositTx = await contractWithSigner.deposit({ value: depositAmount });
         await depositTx.wait();
 
-        let balance = await contractWithSigner.getBalance();
+        let balance = await contractWithSigner.userBalances(user1.address);
         console.log("Balance after deposit:", ethers.formatEther(balance), "ETH");
 
-        // Test placing a bet
-        const betAmount = ethers.parseEther("0.01"); // Reduced to 0.01 ETH
+        //placing a bet
+        const betAmount = ethers.parseEther("10");
         console.log("\nPlacing bet of", ethers.formatEther(betAmount), "ETH");
         const placeBetTx = await contractWithSigner.placeBet(true, betAmount);
         await placeBetTx.wait();
 
-        balance = await contractWithSigner.getBalance();
+        balance = await contractWithSigner.userBalances(user1.address);
         console.log("Balance after placing bet:", ethers.formatEther(balance), "ETH");
 
-        // Update prices
+        //update prices
         console.log("\nUpdating prices...");
-        await mockDogeFeed.updateAnswer(120000000); // DOGE +20%
-        await mockShibFeed.updateAnswer(1100000);   // SHIB +10%
+        await mockDogeFeed.updateAnswer(120000000);
+        await mockShibFeed.updateAnswer(1100000);
         console.log("Prices updated: DOGE +20%, SHIB +10%");
 
-        // Fast forward time
+        //timeb travel
         console.log("\nAdvancing time...");
-        await ethers.provider.send("evm_increaseTime", [3600]); // Increase time by 1 hour
+        await ethers.provider.send("evm_increaseTime", [3600]);
         await ethers.provider.send("evm_mine");
 
-        // Settle bet
+        //settle bet
         console.log("\nSettling bet...");
-        const settleTx = await memeBets.settleBet(0); // Settle the first bet
+        const settleTx = await memeBets.settleBet(0);
         await settleTx.wait();
-        
-        balance = await memeBets.connect(user1).getBalance();
+
+        balance = await contractWithSigner.userBalances(user1.address);
         console.log("Balance after settlement:", ethers.formatEther(balance), "ETH");
 
-        // Test withdrawal
-        const withdrawAmount = ethers.parseEther("0.02"); // Withdraw 0.02 ETH
+        //withdrawal
+        const withdrawAmount = ethers.parseEther("2");
         console.log("\nWithdrawing", ethers.formatEther(withdrawAmount), "ETH");
-        const withdrawTx = await memeBets.connect(user1).withdraw(withdrawAmount);
+        const withdrawTx = await contractWithSigner.connect(user1).withdraw(withdrawAmount);
         await withdrawTx.wait();
-        
-        balance = await memeBets.connect(user1).getBalance();
+
+        balance = await contractWithSigner.userBalances(user1.address);
         console.log("Final balance:", ethers.formatEther(balance), "ETH");
+
+       
 
     } catch (error) {
         console.error("Error occurred:", error);

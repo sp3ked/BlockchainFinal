@@ -59,19 +59,19 @@ export default function Footer() {
               <li>
                 <span className="flex justify-between">
                   Total Volume
-                  <span className="text-white">$1.2M</span>
+                  <span className="text-white">$31.2T</span>
                 </span>
               </li>
               <li>
                 <span className="flex justify-between">
                   Active Markets
-                  <span className="text-white">142</span>
+                  <span className="text-white">142,429</span>
                 </span>
               </li>
               <li>
                 <span className="flex justify-between">
                   Active Users
-                  <span className="text-white">2.4K</span>
+                  <span className="text-white">2.4B</span>
                 </span>
               </li>
             </ul>
@@ -81,7 +81,7 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm">
-            © 2024 CryptoBets. All rights reserved.
+            © 2024 MemeBattles. All rights reserved.
           </div>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <button className="text-gray-400 hover:text-white text-sm transition-colors">
@@ -91,7 +91,7 @@ export default function Footer() {
               Privacy Policy
             </button>
             <button className="text-gray-400 hover:text-white text-sm transition-colors">
-              Cookie Policy
+              Cookie Policy (Cookies are delicious)
             </button>
           </div>
         </div>

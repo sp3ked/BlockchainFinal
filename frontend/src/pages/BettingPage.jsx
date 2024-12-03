@@ -40,7 +40,6 @@ export default function BettingPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Initial price fetch and periodic updates
   useEffect(() => {
     let intervalId;
 
@@ -52,11 +51,7 @@ export default function BettingPage() {
         setIsLoading(false);
       }
     };
-
-    // Immediate fetch
     fetchPrices();
-
-    // Then set up interval
     intervalId = setInterval(fetchPrices, 10000);
 
     return () => clearInterval(intervalId);

@@ -6,7 +6,7 @@ import { TrendingUp, Activity, Clock, Filter } from 'lucide-react';
 export default function HomePage() {
   const bettingMarkets = [
     {
-      title: "DOGE vs SHIB",
+      title: "DOGE vs SHIB (working)",
       options: [
         { name: "DOGE", percentage: 56.2 },
         { name: "SHIB", percentage: 43.8 }
@@ -16,7 +16,7 @@ export default function HomePage() {
       link: "/bet/doge-vs-shib"
     },
     {
-      title: "PEPE vs WOJAK",
+      title: "PEPE vs WOJAK (filler)",
       options: [
         { name: "PEPE", percentage: 62.5 },
         { name: "WOJAK", percentage: 37.5 }
@@ -26,7 +26,7 @@ export default function HomePage() {
       link: "/bet/pepe-vs-wojak"
     },
     {
-      title: "FLOKI vs BONK",
+      title: "FLOKI vs BONK (filler)",
       options: [
         { name: "FLOKI", percentage: 48.3 },
         { name: "BONK", percentage: 51.7 }
@@ -35,7 +35,6 @@ export default function HomePage() {
       timeLeft: "45m",
       link: "/bet/floki-vs-bonk"
     }
-    // Add more markets as needed
   ];
 
   return (
@@ -55,7 +54,7 @@ export default function HomePage() {
           </button>
         </div>
 
-        {/* Market Categories */}
+        {/* Market Categories (filler)*/}
         <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-thin">
           <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
             <TrendingUp className="h-4 w-4" />

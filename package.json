@@ -24,6 +24,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0",
     "chart.js": "^4.4.1",
     "lightweight-charts": "^4.2.1",
     "react-chartjs-2": "^5.2.0",
